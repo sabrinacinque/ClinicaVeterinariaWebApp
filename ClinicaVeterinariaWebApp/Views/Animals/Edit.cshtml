@@ -1,4 +1,4 @@
-﻿@model ClinicaVeterinariaWebApp.Models.Shelter
+﻿@model ClinicaVeterinariaWebApp.Models.Animal
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-<h4>Shelter</h4>
+<h4>Animal</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,7 +14,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="RegistrationDate" class="control-label"></label>
-                <input asp-for="RegistrationDate" class="form-control" />
+                <input asp-for="RegistrationDate" class="form-control" asp-format="{0:yyyy-MM-dd}" />
                 <span asp-validation-for="RegistrationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" class="form-control" />
+                <input asp-for="BirthDate" class="form-control" asp-format="{0:yyyy-MM-dd}" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,21 +43,15 @@
                 <span asp-validation-for="Microchip" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AdmissionDate" class="control-label"></label>
-                <input asp-for="AdmissionDate" class="form-control" />
-                <span asp-validation-for="AdmissionDate" class="text-danger"></span>
+                <label asp-for="OwnerFirstName" class="control-label"></label>
+                <input asp-for="OwnerFirstName" class="form-control" />
+                <span asp-validation-for="OwnerFirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Photo" class="control-label">Photo</label>
-                <input asp-for="Photo" type="file" class="form-control" />
-                <span asp-validation-for="Photo" class="text-danger"></span>
+                <label asp-for="OwnerLastName" class="control-label"></label>
+                <input asp-for="OwnerLastName" class="form-control" />
+                <span asp-validation-for="OwnerLastName" class="text-danger"></span>
             </div>
-            @if (Model.PhotoUrl != null)
-            {
-                <div class="form-group">
-                    <img src="@Model.PhotoUrl" alt="Animal Photo" style="width:200px;height:auto;" />
-                </div>
-            }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

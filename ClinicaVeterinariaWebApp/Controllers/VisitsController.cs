@@ -170,5 +170,7 @@ namespace ClinicaVeterinariaWebApp.Controllers
         {
             return _context.Visits.Any(e => e.Id == id);
         }
+
+        
     }
 }

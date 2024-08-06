@@ -9,16 +9,16 @@ namespace ClinicaVeterinariaWebApp.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        
         public DateTime RegistrationDate { get; set; }
 
         [Required]
         public string Name { get; set; }
 
-        [Required]
+        
         public string Type { get; set; }
 
-        [Required]
+        
         public string CoatColor { get; set; }
 
         [DataType(DataType.Date)]
@@ -26,8 +26,12 @@ namespace ClinicaVeterinariaWebApp.Models
 
         public string ? Microchip { get; set; }
 
-        [Required]
+        
+        [DataType(DataType.Date)]
         public DateTime ? AdmissionDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? DischargeDate { get; set; }
 
         public string ? PhotoUrl { get; set; }
 

@@ -49,7 +49,7 @@ namespace ClinicaVeterinariaWebApp.Controllers
         // GET: Shelters/Create
         public IActionResult Create()
         {
-            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto" });
+            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto", "Cavallo", "Coniglio", "Criceto", "Altro" });
             return View();
         }
 
@@ -75,7 +75,7 @@ namespace ClinicaVeterinariaWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto" });
+            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto", "Cavallo", "Coniglio", "Criceto", "Altro" });
             return View(shelter);
         }
 
@@ -92,14 +92,14 @@ namespace ClinicaVeterinariaWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto" });
+            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto", "Cavallo", "Coniglio", "Criceto", "Altro" });
             return View(shelter);
         }
 
         // POST: Shelters/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegistrationDate,Name,Type,CoatColor,BirthDate,Microchip,AdmissionDate,PhotoUrl,Photo")] Shelter shelter)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RegistrationDate,Name,Type,CoatColor,BirthDate,Microchip,AdmissionDate,DischargeDate,PhotoUrl,Photo")] Shelter shelter)
         {
             if (id != shelter.Id)
             {
@@ -148,10 +148,9 @@ namespace ClinicaVeterinariaWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto"});
+            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto", "Cavallo", "Coniglio", "Criceto", "Altro" });
             return View(shelter);
         }
-
 
         // GET: Shelters/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -198,30 +197,56 @@ namespace ClinicaVeterinariaWebApp.Controllers
             return _context.Shelters.Any(e => e.Id == id);
         }
 
-
         // GET: Shelters/Search
         public IActionResult Search()
         {
             return View();
         }
 
-        // POST: Shelters/SearchResults
         [HttpPost]
         public async Task<IActionResult> SearchResults(string microchip)
         {
             var shelter = await _context.Shelters.FirstOrDefaultAsync(s => s.Microchip == microchip);
             if (shelter == null)
             {
-                return NotFound();
+                ViewBag.Message = "Animal not found.";
+                return View();
             }
             return View(shelter);
         }
 
         // GET: Shelters/Active
-        public async Task<IActionResult> Active()
+        public IActionResult Active()
         {
-            var activeShelters = await _context.Shelters.Where(s => s.AdmissionDate != null).ToListAsync();
-            return View(activeShelters);
+            return View();
+        }
+
+        // GET: Shelters/GetActiveShelters
+        public async Task<IActionResult> GetActiveShelters(DateTime? startDate, DateTime? endDate)
+        {
+            var query = _context.Shelters.AsQueryable();
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                query = query.Where(s =>
+                    (s.AdmissionDate >= startDate.Value && s.AdmissionDate <= endDate.Value) ||
+                    (s.DischargeDate.HasValue && s.DischargeDate.Value >= startDate.Value && s.DischargeDate.Value <= endDate.Value) ||
+                    (s.AdmissionDate <= endDate.Value && (s.DischargeDate == null || s.DischargeDate >= startDate.Value)));
+            }
+
+            var activeShelters = await query
+                .Select(s => new
+                {
+                    Name = s.Name,
+                    Type = s.Type,
+                    CoatColor = s.CoatColor,
+                    AdmissionDate = s.AdmissionDate,
+                    DischargeDate = s.DischargeDate,
+                    PhotoUrl = s.PhotoUrl
+                })
+                .ToListAsync();
+
+            return Json(activeShelters);
         }
     }
 }

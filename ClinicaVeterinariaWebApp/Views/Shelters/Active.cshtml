@@ -1,51 +1,77 @@
-﻿@model IEnumerable<ClinicaVeterinariaWebApp.Models.Shelter>
-
-@{
+﻿@{
     ViewData["Title"] = "Active Shelters";
 }
 
 <h1>Active Shelters</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CoatColor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AdmissionDate)
-            </th>
-            <th>
-                Photo
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CoatColor)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AdmissionDate)
-                </td>
-                <td>
-                    <img src="@item.PhotoUrl" alt="Animal Photo" style="width:100px;height:auto;" />
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div>
+    <form id="searchForm">
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" name="endDate" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+
+<h3 id="totalShelters" style="margin-top: 20px;"></h3>
+
+<div id="activeSheltersContainer" style="margin-top: 20px;">
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').on('submit', function (e) {
+                e.preventDefault();
+                var startDate = $('#startDate').val();
+                var endDate = $('#endDate').val();
+
+                $.ajax({
+                    url: '@Url.Action("GetActiveShelters", "Shelters")',
+                    method: 'GET',
+                    data: { startDate: startDate, endDate: endDate },
+                    success: function (data) {
+                        var container = $('#activeSheltersContainer');
+                        var totalShelters = $('#totalShelters');
+                        container.empty();
+                        if (data.length === 0) {
+                            totalShelters.text('No active shelters found.');
+                        } else {
+                            totalShelters.text('Ricoveri attivi nel periodo selezionato: ' + data.length);
+                            var table = $('<table class="table"></table>');
+                            var thead = $('<thead><tr><th>Name</th><th>Type</th><th>Coat Color</th><th>Admission Date</th><th>Discharge Date</th><th>Photo</th></tr></thead>');
+                            table.append(thead);
+                            var tbody = $('<tbody></tbody>');
+                            data.forEach(function (item) {
+                                var row = $('<tr></tr>');
+                                row.append('<td>' + item.name + '</td>');
+                                row.append('<td>' + item.type + '</td>');
+                                row.append('<td>' + item.coatColor + '</td>');
+                                row.append('<td>' + new Date(item.admissionDate).toLocaleDateString() + '</td>');
+                                row.append('<td>' + (item.dischargeDate ? new Date(item.dischargeDate).toLocaleDateString() : '') + '</td>');
+                                if (item.photoUrl) {
+                                    row.append('<td><img src="' + item.photoUrl + '" alt="Animal Photo" style="width:100px;height:auto;" /></td>');
+                                } else {
+                                    row.append('<td>No photo</td>');
+                                }
+                                tbody.append(row);
+                            });
+                            table.append(tbody);
+                            container.append(table);
+                        }
+                    },
+                    error: function () {
+                        $('#totalShelters').text('');
+                        $('#activeSheltersContainer').html('<p>Error loading data.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+}
