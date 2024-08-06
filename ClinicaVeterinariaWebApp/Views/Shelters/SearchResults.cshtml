@@ -1,0 +1,49 @@
+﻿@model ClinicaVeterinariaWebApp.Models.Shelter
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h1>Search Results</h1>
+
+@if (Model == null)
+{
+    <h4>Animal not found.</h4>
+}
+else
+{
+    <h4>Animal found:</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CoatColor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CoatColor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AdmissionDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AdmissionDate)
+        </dd>
+        <dt class="col-sm-2">
+            Photo
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.PhotoUrl" alt="Animal Photo" style="width:100px;height:auto;" />
+        </dd>
+    </dl>
+}

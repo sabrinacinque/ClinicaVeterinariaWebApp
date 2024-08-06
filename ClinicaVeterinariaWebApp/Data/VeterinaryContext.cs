@@ -8,6 +8,8 @@ namespace ClinicaVeterinariaWebApp.Data
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Visit> Visits { get; set; }
 
+        public DbSet<Shelter> Shelters { get; set; }
+
         public VeterinaryContext(DbContextOptions<VeterinaryContext> options) : base(options)
         {
         }

@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control" asp-items="ViewBag.AnimalTypes"></select>
+                <input asp-for="Type" class="form-control" />
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,18 +33,18 @@
                 <span asp-validation-for="CoatColor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" class="form-control" />
+                <label asp-for="BirthDate" class="control-label">Data di nascita(anche presunta)</label>
+                <input asp-for="BirthDate" class="form-control" asp-format="{0:yyyy-MM-dd}" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Microchip" class="control-label"></label>
+                <label asp-for="Microchip" class="control-label">Se presente,inserire qui Microchip</label>
                 <input asp-for="Microchip" class="form-control" />
                 <span asp-validation-for="Microchip" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AdmissionDate" class="control-label"></label>
-                <input asp-for="AdmissionDate" class="form-control" />
+                <input asp-for="AdmissionDate" class="form-control" asp-format="{0:yyyy-MM-dd}" />
                 <span asp-validation-for="AdmissionDate" class="text-danger"></span>
             </div>
             <div class="form-group">

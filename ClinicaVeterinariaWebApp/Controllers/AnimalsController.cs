@@ -151,5 +151,27 @@ namespace ClinicaVeterinariaWebApp.Controllers
         {
             return _context.Animals.Any(e => e.Id == id);
         }
+
+        // GET: Animals/VisitHistory/5
+        public async Task<IActionResult> VisitHistory(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var visits = await _context.Visits
+                .Where(v => v.AnimalId == id)
+                .OrderByDescending(v => v.VisitDate)
+                .ToListAsync();
+
+            if (visits == null || visits.Count == 0)
+            {
+                ViewBag.Message = "Non ci sono visite pregresse per l'animale selezionato.";
+            }
+
+            return View(visits);
+        }
     }
 }
+
