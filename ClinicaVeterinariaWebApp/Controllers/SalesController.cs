@@ -1,7 +1,7 @@
 ﻿using ClinicaVeterinariaWebApp.Data;
 using ClinicaVeterinariaWebApp.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,7 +45,7 @@ public class SalesController : Controller
     // GET: Sales/Create
     public IActionResult Create()
     {
-        ViewBag.Products = new SelectList(_context.Products, "Id", "Name");
+        ViewBag.Cabinets = new SelectList(_context.Cabinets, "Id", "Code");
         return View();
     }
 
@@ -60,11 +60,10 @@ public class SalesController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        ViewBag.Products = new SelectList(_context.Products, "Id", "Name", sale.ProductId);
+        ViewBag.Cabinets = new SelectList(_context.Cabinets, "Id", "Code");
         return View(sale);
     }
 
-    // GET: Sales/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -72,16 +71,35 @@ public class SalesController : Controller
             return NotFound();
         }
 
-        var sale = await _context.Sales.FindAsync(id);
+        var sale = await _context.Sales
+            .Include(s => s.Product)
+                .ThenInclude(p => p.Drawer)
+                    .ThenInclude(d => d.Cabinet)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
         if (sale == null)
         {
             return NotFound();
         }
-        ViewBag.Products = new SelectList(_context.Products, "Id", "Name", sale.ProductId);
+
+        var selectedCabinetId = sale.Product?.Drawer?.CabinetId;
+        var selectedDrawerId = sale.Product?.DrawerId;
+
+        var cabinets = await _context.Cabinets.ToListAsync();
+        var drawers = selectedCabinetId.HasValue
+            ? await _context.Drawers.Where(d => d.CabinetId == selectedCabinetId.Value).ToListAsync()
+            : new List<Drawer>();
+        var products = selectedDrawerId.HasValue
+            ? await _context.Products.Where(p => p.DrawerId == selectedDrawerId.Value).ToListAsync()
+            : new List<Product>();
+
+        ViewBag.Cabinets = cabinets;
+        ViewBag.Drawers = drawers;
+        ViewBag.Products = products;
+
         return View(sale);
     }
 
-    // POST: Sales/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, [Bind("Id,CustomerFiscalCode,ProductId,PrescriptionNumber,SaleDate")] Sale sale)
@@ -111,9 +129,31 @@ public class SalesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        ViewBag.Products = new SelectList(_context.Products, "Id", "Name", sale.ProductId);
+
+        var selectedProduct = await _context.Products
+            .Include(p => p.Drawer)
+                .ThenInclude(d => d.Cabinet)
+            .FirstOrDefaultAsync(p => p.Id == sale.ProductId);
+
+        var selectedCabinetId = selectedProduct?.Drawer?.CabinetId;
+        var selectedDrawerId = selectedProduct?.DrawerId;
+
+        var cabinets = await _context.Cabinets.ToListAsync();
+        var drawers = selectedCabinetId.HasValue
+            ? await _context.Drawers.Where(d => d.CabinetId == selectedCabinetId.Value).ToListAsync()
+            : new List<Drawer>();
+        var products = selectedDrawerId.HasValue
+            ? await _context.Products.Where(p => p.DrawerId == selectedDrawerId.Value).ToListAsync()
+            : new List<Product>();
+
+        ViewBag.Cabinets = cabinets;
+        ViewBag.Drawers = drawers;
+        ViewBag.Products = products;
+
         return View(sale);
     }
+
+
 
     // GET: Sales/Delete/5
     public async Task<IActionResult> Delete(int? id)
@@ -151,27 +191,26 @@ public class SalesController : Controller
         return _context.Sales.Any(e => e.Id == id);
     }
 
-    // GET: Sales/Search
-    public async Task<IActionResult> Search(string productName)
+    [HttpGet]
+    public async Task<IActionResult> GetDrawersByCabinetId(int cabinetId)
     {
-        if (string.IsNullOrEmpty(productName))
-        {
-            return Json(new { success = false, message = "Product name is required" });
-        }
-
-        var products = await _context.Products
-            .Include(p => p.Drawer)
-            .ThenInclude(d => d.Cabinet)
-            .Where(p => p.Name.Contains(productName))
-            .Select(p => new
-            {
-                p.Id,
-                p.Name,
-                DrawerNumber = p.Drawer.Number,
-                CabinetCode = p.Drawer.Cabinet.Code
-            })
+        var drawers = await _context.Drawers
+            .Where(d => d.CabinetId == cabinetId)
+            .Select(d => new { d.Id, d.Number })
             .ToListAsync();
 
-        return Json(new { success = true, data = products });
+        return Json(drawers);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetProductsByDrawerId(int drawerId)
+    {
+        var products = await _context.Products
+            .Where(p => p.DrawerId == drawerId)
+            .Select(p => new { p.Id, p.Name })
+            .ToListAsync();
+
+        return Json(products);
+    }
+
 }

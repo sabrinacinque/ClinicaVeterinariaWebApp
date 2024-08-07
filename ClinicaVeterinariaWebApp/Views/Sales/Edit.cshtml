@@ -1,10 +1,10 @@
 ﻿@model ClinicaVeterinariaWebApp.Models.Sale
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Sale";
 }
 
-<h1>Edit</h1>
+<h1>Edit Sale</h1>
 
 <h4>Sale</h4>
 <hr />
@@ -18,9 +18,9 @@
                 <span asp-validation-for="CustomerFiscalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.Products"></select>
-                <span asp-validation-for="ProductId" class="text-danger"></span>
+                <label asp-for="SaleDate" class="control-label"></label>
+                <input asp-for="SaleDate" class="form-control" type="date" />
+                <span asp-validation-for="SaleDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrescriptionNumber" class="control-label"></label>
@@ -28,9 +28,35 @@
                 <span asp-validation-for="PrescriptionNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SaleDate" class="control-label"></label>
-                <input asp-for="SaleDate" class="form-control" asp-format="{0:yyyy-MM-dd}" />
-                <span asp-validation-for="SaleDate" class="text-danger"></span>
+                <label for="CabinetId" class="control-label">Cabinet</label>
+                <select id="CabinetId" class="form-control">
+                    <option value="">Select Cabinet</option>
+                    @foreach (var cabinet in (IEnumerable<ClinicaVeterinariaWebApp.Models.Cabinet>)ViewBag.Cabinets)
+                    {
+                        @Html.Raw($"<option value='{cabinet.Id}' {(cabinet.Id == Model.Product?.Drawer?.CabinetId ? "selected" : "")}>{cabinet.Code}</option>")
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="DrawerId" class="control-label">Drawer</label>
+                <select id="DrawerId" class="form-control">
+                    <option value="">Select Drawer</option>
+                    @foreach (var drawer in (IEnumerable<ClinicaVeterinariaWebApp.Models.Drawer>)ViewBag.Drawers)
+                    {
+                        @Html.Raw($"<option value='{drawer.Id}' {(drawer.Id == Model.Product?.DrawerId ? "selected" : "")}>{drawer.Number}</option>")
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label">Product</label>
+                <select asp-for="ProductId" class="form-control" id="ProductId">
+                    <option value="">Select Product</option>
+                    @foreach (var product in (IEnumerable<ClinicaVeterinariaWebApp.Models.Product>)ViewBag.Products)
+                    {
+                        @Html.Raw($"<option value='{product.Id}' {(product.Id == Model.ProductId ? "selected" : "")}>{product.Name}</option>")
+                    }
+                </select>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -44,7 +70,76 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            // Pre-select Drawers based on the selected Cabinet
+            var selectedCabinetId = $('#CabinetId').val();
+            if (selectedCabinetId) {
+                $.getJSON('@Url.Action("GetDrawersByCabinetId")', { cabinetId: selectedCabinetId }, function (drawers) {
+                    var drawerSelect = $('#DrawerId');
+                    drawerSelect.empty();
+                    drawerSelect.append('<option value="">Select Drawer</option>');
+                    $.each(drawers, function (i, drawer) {
+                        drawerSelect.append('<option value="' + drawer.id + '">' + drawer.number + '</option>');
+                    });
+                    drawerSelect.val('@Model.Product?.DrawerId'); // Select the current drawer
+                });
+            }
+
+            // Pre-select Products based on the selected Drawer
+            var selectedDrawerId = $('#DrawerId').val();
+            if (selectedDrawerId) {
+                $.getJSON('@Url.Action("GetProductsByDrawerId")', { drawerId: selectedDrawerId }, function (products) {
+                    var productSelect = $('#ProductId');
+                    productSelect.empty();
+                    productSelect.append('<option value="">Select Product</option>');
+                    $.each(products, function (i, product) {
+                        productSelect.append('<option value="' + product.id + '">' + product.name + '</option>');
+                    });
+                    productSelect.val('@Model.ProductId'); // Select the current product
+                });
+            }
+
+            $('#CabinetId').change(function () {
+                var cabinetId = $(this).val();
+                console.log("Selected CabinetId: " + cabinetId);
+                if (cabinetId) {
+                    $.getJSON('@Url.Action("GetDrawersByCabinetId")', { cabinetId: cabinetId }, function (drawers) {
+                        var drawerSelect = $('#DrawerId');
+                        drawerSelect.empty();
+                        drawerSelect.append('<option value="">Select Drawer</option>');
+                        $.each(drawers, function (i, drawer) {
+                            console.log("Drawer: ", drawer);
+                            drawerSelect.append('<option value="' + drawer.id + '">' + drawer.number + '</option>');
+                        });
+                    });
+                } else {
+                    $('#DrawerId').empty();
+                    $('#DrawerId').append('<option value="">Select Drawer</option>');
+                    $('#ProductId').empty();
+                    $('#ProductId').append('<option value="">Select Product</option>');
+                }
+            });
+
+            $('#DrawerId').change(function () {
+                var drawerId = $(this).val();
+                console.log("Selected DrawerId: " + drawerId);
+                if (drawerId) {
+                    $.getJSON('@Url.Action("GetProductsByDrawerId")', { drawerId: drawerId }, function (products) {
+                        var productSelect = $('#ProductId');
+                        productSelect.empty();
+                        productSelect.append('<option value="">Select Product</option>');
+                        $.each(products, function (i, product) {
+                            console.log("Product: ", product);
+                            productSelect.append('<option value="' + product.id + '">' + product.name + '</option>');
+                        });
+                    });
+                } else {
+                    $('#ProductId').empty();
+                    $('#ProductId').append('<option value="">Select Product</option>');
+                }
+            });
+        });
+    </script>
 }

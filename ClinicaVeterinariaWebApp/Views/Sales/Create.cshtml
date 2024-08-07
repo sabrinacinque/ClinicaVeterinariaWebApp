@@ -17,11 +17,9 @@
                 <span asp-validation-for="CustomerFiscalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <input type="text" id="productName" class="form-control" placeholder="Search for product..." />
-                <button type="button" id="searchButton" class="btn btn-primary">Search</button>
-                <select asp-for="ProductId" class="form-control" asp-items="ViewBag.Products" id="productSelect"></select>
-                <span asp-validation-for="ProductId" class="text-danger"></span>
+                <label asp-for="SaleDate" class="control-label"></label>
+                <input asp-for="SaleDate" class="form-control" type="date" />
+                <span asp-validation-for="SaleDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PrescriptionNumber" class="control-label"></label>
@@ -29,9 +27,23 @@
                 <span asp-validation-for="PrescriptionNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SaleDate" class="control-label"></label>
-                <input asp-for="SaleDate" class="form-control" asp-format="{0:yyyy-MM-dd}" />
-                <span asp-validation-for="SaleDate" class="text-danger"></span>
+                <label for="CabinetId" class="control-label">Cabinet</label>
+                <select id="CabinetId" class="form-control" asp-items="ViewBag.Cabinets">
+                    <option value="">Select Cabinet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="DrawerId" class="control-label">Drawer</label>
+                <select id="DrawerId" class="form-control">
+                    <option value="">Select Drawer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label">Product</label>
+                <select asp-for="ProductId" class="form-control" id="ProductId">
+                    <option value="">Select Product</option>
+                </select>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -45,25 +57,48 @@
 </div>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
     <script>
-        document.getElementById('searchButton').addEventListener('click', function () {
-            var productName = document.getElementById('productName').value;
-            fetch(`/Sales/Search?productName=${productName}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        var productSelect = document.getElementById('productSelect');
-                        productSelect.innerHTML = '';
-                        data.data.forEach(item => {
-                            var option = document.createElement('option');
-                            option.value = item.id;
-                            option.text = `${item.name} - Drawer: ${item.drawerNumber}, Cabinet: ${item.cabinetCode}`;
-                            productSelect.appendChild(option);
+        $(document).ready(function () {
+            $('#CabinetId').change(function () {
+                var cabinetId = $(this).val();
+                console.log("Selected CabinetId: " + cabinetId);
+                if (cabinetId) {
+                    $.getJSON('@Url.Action("GetDrawersByCabinetId")', { cabinetId: cabinetId }, function (drawers) {
+                        var drawerSelect = $('#DrawerId');
+                        drawerSelect.empty();
+                        drawerSelect.append('<option value="">Select Drawer</option>');
+                        $.each(drawers, function (i, drawer) {
+                            console.log("Drawer: ", drawer);
+                            drawerSelect.append('<option value="' + drawer.id + '">' + drawer.number + '</option>');
                         });
-                    } else {
-                        alert(data.message);
-                    }
-                });
+                    });
+                } else {
+                    $('#DrawerId').empty();
+                    $('#DrawerId').append('<option value="">Select Drawer</option>');
+                    $('#ProductId').empty();
+                    $('#ProductId').append('<option value="">Select Product</option>');
+                }
+            });
+
+            $('#DrawerId').change(function () {
+                var drawerId = $(this).val();
+                console.log("Selected DrawerId: " + drawerId);
+                if (drawerId) {
+                    $.getJSON('@Url.Action("GetProductsByDrawerId")', { drawerId: drawerId }, function (products) {
+                        var productSelect = $('#ProductId');
+                        productSelect.empty();
+                        productSelect.append('<option value="">Select Product</option>');
+                        $.each(products, function (i, product) {
+                            console.log("Product: ", product);
+                            productSelect.append('<option value="' + product.id + '">' + product.name + '</option>');
+                        });
+                    });
+                } else {
+                    $('#ProductId').empty();
+                    $('#ProductId').append('<option value="">Select Product</option>');
+                }
+            });
         });
     </script>
 }
