@@ -13,6 +13,8 @@ namespace ClinicaVeterinariaWebApp.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Cabinet> Cabinets { get; set; }
+        public DbSet<Drawer> Drawers { get; set; }
 
         public VeterinaryContext(DbContextOptions<VeterinaryContext> options) : base(options)
         {

@@ -1,10 +1,10 @@
 ﻿@model ClinicaVeterinariaWebApp.Models.Product
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Product";
 }
 
-<h1>Create</h1>
+<h1>Create Product</h1>
 
 <h4>Product</h4>
 <hr />
@@ -17,19 +17,24 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductType" class="control-label"></label>
-                <input asp-for="ProductType" class="form-control" />
+                <label asp-for="SupplierId" class="control-label">Supplier</label>
+                <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.Suppliers"></select>
+                <span asp-validation-for="SupplierId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DrawerId" class="control-label">Drawer</label>
+                <select asp-for="DrawerId" class="form-control" asp-items="ViewBag.Drawers"></select>
+                <span asp-validation-for="DrawerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductType" class="control-label">Product Type</label>
+                <select asp-for="ProductType" class="form-control" asp-items="ViewBag.ProductTypes"></select>
                 <span asp-validation-for="ProductType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Uses" class="control-label"></label>
-                <input asp-for="Uses" class="form-control" />
+                <label asp-for="Uses" class="control-label">Uses</label>
+                <select asp-for="Uses" class="form-control" asp-items="ViewBag.Uses"></select>
                 <span asp-validation-for="Uses" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupplierId" class="control-label"></label>
-                <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.Suppliers"></select>
-                <span asp-validation-for="SupplierId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

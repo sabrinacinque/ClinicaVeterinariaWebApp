@@ -1,4 +1,5 @@
 ﻿using Microsoft.Build.Framework;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ClinicaVeterinariaWebApp.Models
 {
@@ -12,9 +13,11 @@ namespace ClinicaVeterinariaWebApp.Models
         [Required]
         public string Uses { get; set; } // Elenco degli usi possibili
         [Required]
-        public int ? SupplierId { get; set; }
-        public Supplier ? Supplier { get; set; }
-    }
+        public int? SupplierId { get; set; }
+        public Supplier? Supplier { get; set; }
 
+        public int ? DrawerId { get; set; }
+        public Drawer  ? Drawer { get; set; }
+    }
 
 }

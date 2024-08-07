@@ -3,6 +3,8 @@ using ClinicaVeterinariaWebApp.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class SalesController : Controller
 {
@@ -147,5 +149,29 @@ public class SalesController : Controller
     private bool SaleExists(int id)
     {
         return _context.Sales.Any(e => e.Id == id);
+    }
+
+    // GET: Sales/Search
+    public async Task<IActionResult> Search(string productName)
+    {
+        if (string.IsNullOrEmpty(productName))
+        {
+            return Json(new { success = false, message = "Product name is required" });
+        }
+
+        var products = await _context.Products
+            .Include(p => p.Drawer)
+            .ThenInclude(d => d.Cabinet)
+            .Where(p => p.Name.Contains(productName))
+            .Select(p => new
+            {
+                p.Id,
+                p.Name,
+                DrawerNumber = p.Drawer.Number,
+                CabinetCode = p.Drawer.Cabinet.Code
+            })
+            .ToListAsync();
+
+        return Json(new { success = true, data = products });
     }
 }
