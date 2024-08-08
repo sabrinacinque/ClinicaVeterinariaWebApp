@@ -4,20 +4,20 @@
     ViewData["Title"] = "Drawer Details";
 }
 
-<h1>Drawer Details</h1>
+<h1>Dettagli cassetto</h1>
 
 <div>
-    <h4>Drawer</h4>
+    <h4>Cassetto</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Number)
+            Numero
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Number)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Cabinet.Code)
+            Codice Armadietto
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Cabinet.Code)
@@ -25,6 +25,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a> |
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Modifica</a> |
+    <a asp-action="Index" class="btn btn-secondary">Ritorna alla lista</a>
 </div>

@@ -4,47 +4,47 @@
     ViewData["Title"] = "Create Product";
 }
 
-<h1>Create Product</h1>
+<h1>Crea Prodotto</h1>
 
-<h4>Product</h4>
+<h4>Prodotto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Nome</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SupplierId" class="control-label">Supplier</label>
+                <label asp-for="SupplierId" class="control-label">Fornitore</label>
                 <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.Suppliers"></select>
                 <span asp-validation-for="SupplierId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DrawerId" class="control-label">Drawer</label>
+                <label asp-for="DrawerId" class="control-label">Cassetto</label>
                 <select asp-for="DrawerId" class="form-control" asp-items="ViewBag.Drawers"></select>
                 <span asp-validation-for="DrawerId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProductType" class="control-label">Product Type</label>
+                <label asp-for="ProductType" class="control-label">Tipo di prodotto</label>
                 <select asp-for="ProductType" class="form-control" asp-items="ViewBag.ProductTypes"></select>
                 <span asp-validation-for="ProductType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Uses" class="control-label">Uses</label>
+                <label asp-for="Uses" class="control-label">Uso</label>
                 <select asp-for="Uses" class="form-control" asp-items="ViewBag.Uses"></select>
                 <span asp-validation-for="Uses" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crea" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Ritorna alla lista</a>
 </div>
 
 @section Scripts {

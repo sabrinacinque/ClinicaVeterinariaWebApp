@@ -4,33 +4,33 @@
     ViewData["Title"] = "Edit Drawer";
 }
 
-<h1>Edit Drawer</h1>
+<h1>Modifica cassetto</h1>
 
-<h4>Drawer</h4>
+<h4>Cassetto</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Number" class="control-label"></label>
+                <label asp-for="Number" class="control-label">Numero</label>
                 <input asp-for="Number" class="form-control" />
                 <span asp-validation-for="Number" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CabinetId" class="control-label">Cabinet Code</label>
+                <label asp-for="CabinetId" class="control-label">Codice Armadietto</label>
                 <select asp-for="CabinetId" class="form-control" asp-items="ViewBag.Cabinets"></select>
                 <span asp-validation-for="CabinetId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Salva" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Ritorna alla lista</a>
 </div>
 
 @section Scripts {

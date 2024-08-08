@@ -4,56 +4,56 @@
     ViewData["Title"] = "Create Sale";
 }
 
-<h1>Create Sale</h1>
+<h1>Crea</h1>
 
-<h4>Sale</h4>
+<h4>Vendita</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="form-group">
-                <label asp-for="CustomerFiscalCode" class="control-label"></label>
+                <label asp-for="CustomerFiscalCode" class="control-label">Codice fiscale cliente</label>
                 <input asp-for="CustomerFiscalCode" class="form-control" />
                 <span asp-validation-for="CustomerFiscalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SaleDate" class="control-label"></label>
+                <label asp-for="SaleDate" class="control-label">Data di vendita</label>
                 <input asp-for="SaleDate" class="form-control" type="date" />
                 <span asp-validation-for="SaleDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PrescriptionNumber" class="control-label"></label>
+                <label asp-for="PrescriptionNumber" class="control-label">Numero di prescrizione</label>
                 <input asp-for="PrescriptionNumber" class="form-control" />
                 <span asp-validation-for="PrescriptionNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="CabinetId" class="control-label">Cabinet</label>
+                <label for="CabinetId" class="control-label">Armadietto</label>
                 <select id="CabinetId" class="form-control" asp-items="ViewBag.Cabinets">
-                    <option value="">Select Cabinet</option>
+                    <option value="">Seleziona armadietto</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="DrawerId" class="control-label">Drawer</label>
+                <label for="DrawerId" class="control-label">Cassetto</label>
                 <select id="DrawerId" class="form-control">
-                    <option value="">Select Drawer</option>
+                    <option value="">Seleziona cassetto</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="ProductId" class="control-label">Product</label>
+                <label asp-for="ProductId" class="control-label">Prodotto</label>
                 <select asp-for="ProductId" class="form-control" id="ProductId">
-                    <option value="">Select Product</option>
+                    <option value="">Seleziona prodotto</option>
                 </select>
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crea" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Ritorna alla lista</a>
 </div>
 
 @section Scripts {
@@ -67,7 +67,7 @@
                     $.getJSON('@Url.Action("GetDrawersByCabinetId")', { cabinetId: cabinetId }, function (drawers) {
                         var drawerSelect = $('#DrawerId');
                         drawerSelect.empty();
-                        drawerSelect.append('<option value="">Select Drawer</option>');
+                        drawerSelect.append('<option value="">Seleziona cassetto</option>');
                         $.each(drawers, function (i, drawer) {
                             console.log("Drawer: ", drawer);
                             drawerSelect.append('<option value="' + drawer.id + '">' + drawer.number + '</option>');
@@ -75,9 +75,9 @@
                     });
                 } else {
                     $('#DrawerId').empty();
-                    $('#DrawerId').append('<option value="">Select Drawer</option>');
+                    $('#DrawerId').append('<option value="">Seleziona cassetto</option>');
                     $('#ProductId').empty();
-                    $('#ProductId').append('<option value="">Select Product</option>');
+                    $('#ProductId').append('<option value="">Seleziona prodotto</option>');
                 }
             });
 
@@ -88,7 +88,7 @@
                     $.getJSON('@Url.Action("GetProductsByDrawerId")', { drawerId: drawerId }, function (products) {
                         var productSelect = $('#ProductId');
                         productSelect.empty();
-                        productSelect.append('<option value="">Select Product</option>');
+                        productSelect.append('<option value="">Seleziona prodotto</option>');
                         $.each(products, function (i, product) {
                             console.log("Product: ", product);
                             productSelect.append('<option value="' + product.id + '">' + product.name + '</option>');
@@ -96,7 +96,7 @@
                     });
                 } else {
                     $('#ProductId').empty();
-                    $('#ProductId').append('<option value="">Select Product</option>');
+                    $('#ProductId').append('<option value="">Seleziona prodotto</option>');
                 }
             });
         });

@@ -4,30 +4,30 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Crea</h1>
 
-<h4>Shelter</h4>
+<h4>Ospiti del canile</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div class="form-group">
-                <label asp-for="RegistrationDate" class="control-label"></label>
-                <input asp-for="RegistrationDate" class="form-control" />
+                <label asp-for="RegistrationDate" class="control-label">Data di registrazione</label>
+                <input asp-for="RegistrationDate" class="form-control" asp-format="{0:dd-MM-yyyy}" />
                 <span asp-validation-for="RegistrationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Nome</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
+                <label asp-for="Type" class="control-label">Tipo</label>
                 <select asp-for="Type" class="form-control" asp-items="ViewBag.AnimalTypes"></select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CoatColor" class="control-label"></label>
+                <label asp-for="CoatColor" class="control-label">Colore del mantello</label>
                 <input asp-for="CoatColor" class="form-control" />
                 <span asp-validation-for="CoatColor" class="text-danger"></span>
             </div>
@@ -42,29 +42,29 @@
                 <span asp-validation-for="Microchip" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AdmissionDate" class="control-label"></label>
-                <input asp-for="AdmissionDate" class="form-control" />
+                <label asp-for="AdmissionDate" class="control-label">Data di ammissione</label>
+                <input asp-for="AdmissionDate" class="form-control" asp-format="{0:dd-MM-yyyy}" />
                 <span asp-validation-for="AdmissionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DischargeDate" class="control-label"></label>
-                <input asp-for="DischargeDate" class="form-control" asp-format="{0:yyyy-MM-dd}" />
+                <label asp-for="DischargeDate" class="control-label">Data di uscita</label>
+                <input asp-for="DischargeDate" class="form-control" asp-format="{0:dd-MM-yyyy}" />
                 <span asp-validation-for="DischargeDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Photo" class="control-label">Photo</label>
+                <label asp-for="Photo" class="control-label">Foto</label>
                 <input asp-for="Photo" type="file" class="form-control" />
                 <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Crea" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Ritorna alla lista</a>
 </div>
 
 @section Scripts {

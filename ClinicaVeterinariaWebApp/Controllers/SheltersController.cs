@@ -49,7 +49,7 @@ namespace ClinicaVeterinariaWebApp.Controllers
         // GET: Shelters/Create
         public IActionResult Create()
         {
-            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto", "Cavallo", "Coniglio", "Criceto", "Altro" });
+            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto" });
             return View();
         }
 
@@ -75,7 +75,7 @@ namespace ClinicaVeterinariaWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto", "Cavallo", "Coniglio", "Criceto", "Altro" });
+            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto" });
             return View(shelter);
         }
 
@@ -92,7 +92,7 @@ namespace ClinicaVeterinariaWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto", "Cavallo", "Coniglio", "Criceto", "Altro" });
+            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto" });
             return View(shelter);
         }
 
@@ -148,7 +148,7 @@ namespace ClinicaVeterinariaWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto", "Cavallo", "Coniglio", "Criceto", "Altro" });
+            ViewBag.AnimalTypes = new SelectList(new[] { "Cane", "Gatto" });
             return View(shelter);
         }
 

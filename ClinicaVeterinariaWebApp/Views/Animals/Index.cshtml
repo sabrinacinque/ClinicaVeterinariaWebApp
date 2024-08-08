@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ClinicaVeterinariaWebApp.Models.Animal>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Indice";
 }
 
 <div class="row text-center">
@@ -17,66 +17,66 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RegistrationDate)
+                Data Registrazione
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                Tipo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CoatColor)
+                Colore del Mantello
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BirthDate)
+                Data di Nascita
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Microchip)
+                Microchip
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OwnerFirstName)
+                Nome Proprietario
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OwnerLastName)
+                Cognome Proprietario
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CoatColor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Microchip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerFirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerLastName)
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CoatColor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Microchip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerLastName)
+                </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Modifica</a> |
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Dettagli</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Cancella</a>
                 </td>
-                
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

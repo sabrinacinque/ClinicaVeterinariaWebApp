@@ -4,44 +4,44 @@
     ViewData["Title"] = "Product Details";
 }
 
-<h1>Product Details</h1>
+<h1>Dettagli prodotto</h1>
 
 <div>
-    <h4>Product</h4>
+    <h4>Prodotto</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Nome
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductType)
+            Tipo di Prodotto
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ProductType)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Uses)
+            Usi
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Uses)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Supplier.Name)
+            Fornitore
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Supplier.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Drawer.Number)
+            Numero Cassetto
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Drawer.Number)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Drawer.Cabinet.Code)
+            Codice Armadietto
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Drawer.Cabinet.Code)
@@ -49,6 +49,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a> |
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Modifica</a> |
+    <a asp-action="Index" class="btn btn-secondary">Ritorna alla lista</a>
 </div>

@@ -3,9 +3,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Product Name</th>
-            <th>Sale Date</th>
-            <th>Customer Fiscal Code</th>
+            <th>Nome prodotto</th>
+            <th>Data di Vendita</th>
+            <th>Codice fiscale cliente</th>
         </tr>
     </thead>
     <tbody>
@@ -13,7 +13,7 @@
         {
             <tr>
                 <td>@sale.Product.Name</td>
-                <td>@sale.SaleDate.ToString("yyyy-MM-dd")</td>
+                <td>@sale.SaleDate.ToString("dd-MM-yyyy")</td>
                 <td>@sale.CustomerFiscalCode</td>
             </tr>
         }

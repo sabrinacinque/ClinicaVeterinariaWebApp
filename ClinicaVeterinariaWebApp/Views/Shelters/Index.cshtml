@@ -14,25 +14,25 @@
 
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create"><span class="fs-2"> + </span> Inserisci un nuovo ospite</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                Tipo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CoatColor)
+                Colore del Mantello
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AdmissionDate)
+                Data di Ammissione
             </th>
             <th>
-                Photo
+                Foto
             </th>
             <th></th>
         </tr>
@@ -54,12 +54,12 @@
                     @Html.DisplayFor(modelItem => item.AdmissionDate)
                 </td>
                 <td>
-                    <img src="@item.PhotoUrl" alt="Animal Photo" style="width:100px;height:auto;" />
+                    <img src="@item.PhotoUrl" alt="Foto dell'animale" style="width:100px;height:auto;" />
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Modifica</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Dettagli</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Cancella</a>
                 </td>
             </tr>
         }
