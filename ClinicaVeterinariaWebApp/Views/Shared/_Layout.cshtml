@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ClinicaVeterinariaWebApp</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EpiVet&Pharma</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,41 +23,43 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Shelters" asp-action="Search">Search</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Shelters" asp-action="Search">Ricerca</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             @if (User.IsInRole("Veterinario"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Animals" asp-action="Index">Animals</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Animals" asp-action="Index">Pazienti pelosi</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Visits" asp-action="Index">Visits</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Visits" asp-action="Index">Visite</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Shelters" asp-action="Index">Shelters</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Shelters" asp-action="Index">Ospiti registrati</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Shelters" asp-action="Active">Active Shelters</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Shelters" asp-action="Active">Report Ospiti Attivi</a>
                                 </li>
                             }
                             @if (User.IsInRole("Farmacista"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Suppliers" asp-action="Index">Suppliers</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Suppliers" asp-action="Index">Fornitori</a>
+                                </li>
+                       
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Cabinets" asp-action="Index">Armadietti</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Drawers" asp-action="Index">Cassetti</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Prodotti</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Sales" asp-action="Index">Sales</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Cabinets" asp-action="Index">Manage Cabinets</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Drawers" asp-action="Index">Manage Drawers</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Sales" asp-action="Index">Vendite</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Sales" asp-action="Report">Reports</a>

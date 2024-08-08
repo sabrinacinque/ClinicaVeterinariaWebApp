@@ -4,50 +4,49 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<h3>
+    <a asp-action="Create"> <span class="fs-2"> + </span> Inserisci nuovo fornitore</a>
+</h3>
+<table class="table" style="background-color: white;">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Nome Fornitore
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Indirizzo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContactName)
+                Rappresentante ditta
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContactPhone)
+                Telefono 
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactPhone)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactPhone)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Modifica</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Dettagli</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Cancella</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

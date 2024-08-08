@@ -4,46 +4,43 @@
     ViewData["Title"] = "Search Results";
 }
 
-<h1>Search Results</h1>
+<h1 class="text-center">Risultato : </h1>
 
 @if (Model == null)
 {
-    <h4>Animal not found.</h4>
+    <div class="row">
+        <div class="col text-center">
+            <h4>Nessun pelosetto trovato</h4>
+            <img src="/img/scodinzola.gif" alt="immagine cane che scodinzola" style="width:400px;height:auto;" class="mt-5" />
+        </div>
+    </div>
 }
 else
 {
-    <h4>Animal found:</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CoatColor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CoatColor)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AdmissionDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AdmissionDate)
-        </dd>
-        <dt class="col-sm-2">
-            Photo
-        </dt>
-        <dd class="col-sm-10">
-            <img src="@Model.PhotoUrl" alt="Animal Photo" style="width:100px;height:auto;" />
-        </dd>
-    </dl>
+    <div class="card mt-4">
+        <div class="card-header text-center">
+            <h4>Pelosetto trovato:</h4>
+        </div>
+        <div class="card-body text-center mt-5">
+            <img src="@Model.PhotoUrl" alt="Animal Photo" class="img-fluid mb-3" style="max-width: 600px; height: auto;" class="mb-5" />
+            <dl class="row justify-content-center">
+                <div class="col-sm-12">
+                    <dt class="text-center">Nome</dt>
+                    <dd class="text-center">@Html.DisplayFor(model => model.Name)</dd>
+                </div>
+                <div class="col-sm-12">
+                    <dt class="text-center">Tipo</dt>
+                    <dd class="text-center">@Html.DisplayFor(model => model.Type)</dd>
+                </div>
+                <div class="col-sm-12">
+                    <dt class="text-center">Colore del Mantello</dt>
+                    <dd class="text-center">@Html.DisplayFor(model => model.CoatColor)</dd>
+                </div>
+                <div class="col-sm-12">
+                    <dt class="text-center">Data di Ammissione</dt>
+                    <dd class="text-center">@Html.DisplayFor(model => model.AdmissionDate)</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
 }
