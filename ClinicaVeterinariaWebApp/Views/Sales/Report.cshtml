@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Sales Reports";
+}
+
+<h1>Sales Reports</h1>
+
+<div>
+    <h2>Medicines Sold on a Specific Date</h2>
+    <input type="date" id="saleDate" />
+    <button id="searchByDateBtn" class="btn btn-primary">Search</button>
+    <div id="salesByDateResult"></div>
+</div>
+
+<hr />
+
+<div>
+    <h2>Medicines Sold to a Specific Customer</h2>
+    <input type="text" id="customerFiscalCode" placeholder="Enter Customer Fiscal Code" />
+    <button id="searchByCustomerBtn" class="btn btn-primary">Search</button>
+    <div id="salesByCustomerResult"></div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#searchByDateBtn').click(function () {
+                var saleDate = $('#saleDate').val();
+                if (saleDate) {
+                    $.ajax({
+                        url: '@Url.Action("GetSalesByDate", "Sales")',
+                        data: { date: saleDate },
+                        success: function (data) {
+                            $('#salesByDateResult').html(data);
+                        }
+                    });
+                }
+            });
+
+            $('#searchByCustomerBtn').click(function () {
+                var fiscalCode = $('#customerFiscalCode').val();
+                if (fiscalCode) {
+                    $.ajax({
+                        url: '@Url.Action("GetSalesByCustomer", "Sales")',
+                        data: { fiscalCode: fiscalCode },
+                        success: function (data) {
+                            $('#salesByCustomerResult').html(data);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

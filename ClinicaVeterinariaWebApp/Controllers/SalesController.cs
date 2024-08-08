@@ -213,4 +213,29 @@ public class SalesController : Controller
         return Json(products);
     }
 
+    public IActionResult Report()
+    {
+        return View();
+    }
+
+    public async Task<IActionResult> GetSalesByDate(DateTime date)
+    {
+        var sales = await _context.Sales
+            .Include(s => s.Product)
+            .Where(s => s.SaleDate.Date == date.Date)
+            .ToListAsync();
+
+        return PartialView("_SalesByDatePartial", sales);
+    }
+
+    public async Task<IActionResult> GetSalesByCustomer(string fiscalCode)
+    {
+        var sales = await _context.Sales
+            .Include(s => s.Product)
+            .Where(s => s.CustomerFiscalCode == fiscalCode)
+            .ToListAsync();
+
+        return PartialView("_SalesByCustomerPartial", sales);
+    }
+
 }

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ClinicaVeterinariaWebApp.Models.Sale>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Sale Date</th>
+            <th>Customer Fiscal Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sale in Model)
+        {
+            <tr>
+                <td>@sale.Product.Name</td>
+                <td>@sale.SaleDate.ToString("yyyy-MM-dd")</td>
+                <td>@sale.CustomerFiscalCode</td>
+            </tr>
+        }
+    </tbody>
+</table>
