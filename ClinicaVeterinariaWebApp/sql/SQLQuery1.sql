@@ -2,6 +2,7 @@
 
 SELECT * FROM Animals;
 SELECT * FROM Users;
+SELECT * FROM Roles;
 
 
 DROP TABLE IF EXISTS AspNetUserTokens;
